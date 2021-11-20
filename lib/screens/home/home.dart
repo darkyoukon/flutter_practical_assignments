@@ -47,6 +47,7 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
 
   PageController _pageController = PageController(initialPage: 0);
   TabController? _tabController;
+  var _scrollController = ScrollController();
 
   late Future futImages;
   Future<List<String>> initImages() async {
@@ -72,26 +73,31 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
     length: 3,
     child: Scaffold(
       backgroundColor: const Color(0xff1d2733),
-      body: SafeArea(
-          child: NestedScrollView(
+      body: NestedScrollView(
+        controller: _scrollController,
               floatHeaderSlivers: true,
               headerSliverBuilder: (context, innerBoxIsScrolled)  => [
-                SliverAppBar(
-                  floating: true,
-                  elevation: 0,
-                  leading: const Icon(Icons.menu, size: 25),
-                  backgroundColor: const Color(0xff212d3b),
-                  title: const Text('Telegram',
-                      style: TextStyle(fontSize: 20.5)),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('This is a snackbar')));
-                      },
+                SliverOverlapAbsorber(
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  sliver: SliverSafeArea(
+                    sliver: SliverAppBar(
+                      floating: true,
+                      elevation: 0,
+                      leading: const Icon(Icons.menu, size: 25),
+                      backgroundColor: const Color(0xff212d3b),
+                      title: const Text('Telegram',
+                          style: TextStyle(fontSize: 20.5)),
+                      actions: <Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.search),
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('This is a snackbar')));
+                          },
+                        )
+                      ],
                     )
-                  ],
+                  )
                 )
               ],
               body: PageView(
@@ -151,8 +157,7 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                   )
                 ],
               )
-          )
-      ),
+          ),
       floatingActionButton: isFabVisible ? FloatingActionButton(
           tooltip: 'Increment Counter',
           backgroundColor: const Color(0xff5fa3de),

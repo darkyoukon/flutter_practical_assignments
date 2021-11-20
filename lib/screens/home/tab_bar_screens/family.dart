@@ -18,7 +18,7 @@ class FamilyScreen extends StatefulWidget {
 }
 
 class _FamilyScreen extends State<FamilyScreen> {
-
+  ScrollController _scrollController = ScrollController();
   late Future futImages;
   Future<List<String>> initImages() async {
     final manifestContent = await rootBundle.loadString('AssetManifest.json');
@@ -37,7 +37,7 @@ class _FamilyScreen extends State<FamilyScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      //controller: _scrollController,
+      controller: _scrollController,
       physics: const BouncingScrollPhysics(),
       itemCount: entries.length,
       padding: const EdgeInsets.only(top: 8, bottom: 8),

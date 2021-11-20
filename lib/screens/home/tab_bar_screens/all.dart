@@ -14,6 +14,7 @@ final List<int> rndState = entries.map((x) => Random().nextInt(4)).toList();
 final List<int> rndMsgs = rndState.map((x) => x == 3 ? Random().nextInt(19)+1 : 0).toList();
 
 class AllScreen extends StatefulWidget {
+
   AllScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,7 +22,7 @@ class AllScreen extends StatefulWidget {
 }
 
 class _StateAllScreen extends State<AllScreen> {
-
+  ScrollController _scrollController = ScrollController();
   late Future futImages;
   Future<List<String>> initImages() async {
     final manifestContent = await rootBundle.loadString('AssetManifest.json');
@@ -40,7 +41,7 @@ class _StateAllScreen extends State<AllScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      //controller: _scrollController,
+      controller: _scrollController,
       physics: const BouncingScrollPhysics(),
       itemCount: entries.length,
       padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -193,24 +194,28 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Hero(
-              tag: 'fullscreen$index',
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  imgtxt,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+      },
+        child: Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Hero(
+                  tag: 'fullscreen$index',
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(
+                      imgtxt,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+    ));
   }
 }
