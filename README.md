@@ -1,4 +1,8 @@
-# PA#1
+# second_pa_telegram
 
-A Flutter project for mobile device software development discipline in KPI.
-In this assignment I show 'Helloworld' application (that have been launched through mobile phone) and crucial fundamentals of Dart language.
+PA#2. Telegram front-end with lecture tasks (hero and swipe moving)
+
+## Getting Started
+
+This project shows how to do front layout.
+I copied Telegram interface with Hero widget and swipe between tabs gesture.

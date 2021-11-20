@@ -1,4 +1,4 @@
-package com.example.test_flutter
+package ua.kpi.second_pa_telegram
 
 import io.flutter.embedding.android.FlutterActivity
 
