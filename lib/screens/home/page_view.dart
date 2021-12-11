@@ -8,7 +8,9 @@ import 'package:second_pa_telegram/screens/home/tab_screens/family.dart';
 import 'home_model.dart';
 
 class MyPageView extends StatelessWidget {
-  const MyPageView({Key? key}) : super(key: key);
+  int countIndex;
+
+  MyPageView(this.countIndex, {Key? key}) : super(key: key);
 
 
   @override
@@ -41,7 +43,7 @@ class MyPageView extends StatelessWidget {
                   }
                   return true;
                 },
-                child: AllScreen()
+                child: AllScreen(countIndex)
             ),
             NotificationListener<UserScrollNotification>(
                 onNotification: (notificationInfo) {
@@ -52,7 +54,7 @@ class MyPageView extends StatelessWidget {
                   }
                   return true;
                 },
-                child: FamilyScreen()
+                child: FamilyScreen(countIndex)
             ),
             NotificationListener<UserScrollNotification>(
                 onNotification: (notificationInfo) {

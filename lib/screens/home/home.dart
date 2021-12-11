@@ -33,13 +33,16 @@ final List<int> rndMsgs =
     rndState.map((x) => x == 3 ? Random().nextInt(8) + 1 : 0).toList();
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+
+  Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _StateHome();
 }
 
 class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
+  int countIndex = 0;
+
   final _bottomNavBarItems = [
     const Tab(
       icon: Text('  All  '),
@@ -71,6 +74,8 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
       child: Scaffold(
           backgroundColor: const Color(0xff1d2733),
           body: NestedScrollView(
+            controller: Provider.of<HomeModel>(context, listen: false)
+                .getScrollController(),
               floatHeaderSlivers: true,
               headerSliverBuilder: (context, innerBoxIsScrolled) => [
                     SliverOverlapAbsorber(
@@ -96,13 +101,15 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                           ],
                         )))
                   ],
-              body: const MyPageView()),
+              body: MyPageView(countIndex)),
           floatingActionButton:
               Provider.of<HomeModel>(context, listen: true).isFabVisible
                   ? FloatingActionButton(
                       tooltip: 'Increment Counter',
                       backgroundColor: const Color(0xff5fa3de),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() => countIndex++);
+                      },
                       child: const Icon(Icons.create_rounded))
                   : null,
           bottomNavigationBar: ColoredBox(
@@ -123,6 +130,10 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                 tabs: _bottomNavBarItems,
                 onTap: (newIndex) {
                   setState(() {
+                    Provider.of<HomeModel>(context, listen: false)
+                        .getScrollController().animateTo(Provider.of<HomeModel>(context, listen: false)
+                        .getScrollController().position.minScrollExtent,
+                        duration: const Duration(milliseconds: 300), curve: Curves.elasticOut);
                     Provider.of<HomeModel>(context, listen: false)
                         .getPageController()
                         .animateToPage(newIndex,

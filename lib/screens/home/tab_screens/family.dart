@@ -12,14 +12,14 @@ final List<int> rndState = entries.map((x) => Random().nextInt(4)).toList();
 final List<int> rndMsgs = rndState.map((x) => x == 3 ? Random().nextInt(19)+1 : 0).toList();
 
 class FamilyScreen extends StatefulWidget {
-  const FamilyScreen({Key? key}) : super(key: key);
+  final int countIndex;
+  const FamilyScreen(this.countIndex, {Key? key}) : super(key: key);
 
   @override
   State<FamilyScreen> createState() => _FamilyScreen();
 }
 
 class _FamilyScreen extends State<FamilyScreen> {
-  ScrollController _scrollController = ScrollController();
   late Future futImages;
   Future<List<String>> initImages() async {
     final manifestContent = await rootBundle.loadString('AssetManifest.json');
@@ -38,7 +38,6 @@ class _FamilyScreen extends State<FamilyScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      controller: _scrollController,
       physics: const BouncingScrollPhysics(),
       itemCount: entries.length,
       padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -134,7 +133,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                                     alignment: Alignment.center,
                                     children: <Widget>[
                                       Container(
-                                          width: rndMsgs[index] > 9 ? 32 : 23,
+                                          width: widget.countIndex+rndMsgs[index] > 9 ? 32 : 23,
                                           height: 23,
                                           alignment: Alignment.center,
                                           decoration: const BoxDecoration(
@@ -142,7 +141,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                                             shape: BoxShape.rectangle,
                                             borderRadius: BorderRadius.all(Radius.circular(80)),
                                           ),
-                                          child: Text((rndMsgs[index]).toString(), style: const TextStyle(fontWeight: FontWeight.bold))
+                                          child: Text((widget.countIndex+rndMsgs[index]).toString(), style: const TextStyle(fontWeight: FontWeight.bold))
                                       ),
                                     ],
                                   )
