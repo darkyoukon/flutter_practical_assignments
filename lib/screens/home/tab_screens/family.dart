@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter/services.dart' show rootBundle;
 
+
 final List<String> entries = <String>['Saved Messages', 'Мама', 'Папа',
   'Любимая', 'Брат', 'Сестра'];
 final List<int> rndState = entries.map((x) => Random().nextInt(4)).toList();

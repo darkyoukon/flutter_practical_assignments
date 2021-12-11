@@ -12,7 +12,7 @@ class App extends StatelessWidget {
           textTheme:
           const TextTheme(bodyText2: TextStyle(color: Color(0xffe9eef4)))),
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      home: Home(),
     );
   }
 }
