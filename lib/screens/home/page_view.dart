@@ -8,9 +8,9 @@ import 'package:second_pa_telegram/screens/home/tab_screens/family.dart';
 import 'home_model.dart';
 
 class MyPageView extends StatelessWidget {
-  int countIndex;
+  final int countIndex;
 
-  MyPageView(this.countIndex, {Key? key}) : super(key: key);
+  const MyPageView(this.countIndex, {Key? key}) : super(key: key);
 
 
   @override

@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeModel extends ChangeNotifier {
   bool isFabVisible = true;
@@ -12,13 +16,18 @@ class HomeModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String appName = 'Telegram';
+  void changeAppName(String newAppName) {
+    appName = newAppName;
+    notifyListeners();
+  }
 
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
   PageController getPageController() {
     return _pageController;
   }
 
-  var _scrollController = ScrollController();
+  final _scrollController = ScrollController();
   ScrollController getScrollController() {
     return _scrollController;
   }
@@ -39,4 +48,21 @@ class HomeModel extends ChangeNotifier {
     _tabController.animateTo(newIndex, curve: Curves.bounceInOut);
     notifyListeners();
   }
+
+  Future<List<String>> initImages() async {
+    final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+
+    return manifestMap.keys
+        .where((String key) => key.contains('images/'))
+        .toList();
+  }
+
+  static final List<String> entries = <String>['Saved Messages', 'Мама', 'Папа',
+    'Любимая', 'Брат', 'Сестра',
+    'Алла Ивановна', 'Павел Дуров',
+    'Mark Zuckerberg', 'Deleted contact',
+    'Test', 'test2', 'test3', 'test test'];
+  static final List rndState = entries.map((x) => Random().nextInt(4)).toList();
+  static final List<int> rndMsgs = rndState.map((x) => x == 3 ? Random().nextInt(19)+1 : 0).toList();
 }

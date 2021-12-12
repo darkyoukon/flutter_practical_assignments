@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:math';
 
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
@@ -12,29 +11,9 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import 'home_model.dart';
 
-final List<String> entries = <String>[
-  'Saved Messages',
-  'Мама',
-  'Папа',
-  'Любимая',
-  'Брат',
-  'Сестра',
-  'Алла Ивановна',
-  'Павел Дуров',
-  'Mark Zuckerberg',
-  'Deleted contact',
-  'Test',
-  'test2',
-  'test3',
-  'test test'
-];
-final List<int> rndState = entries.map((x) => Random().nextInt(4)).toList();
-final List<int> rndMsgs =
-    rndState.map((x) => x == 3 ? Random().nextInt(8) + 1 : 0).toList();
-
 class Home extends StatefulWidget {
 
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _StateHome();
@@ -87,8 +66,8 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                           elevation: 0,
                           leading: const Icon(Icons.menu, size: 25),
                           backgroundColor: const Color(0xff212d3b),
-                          title: const Text('Telegram',
-                              style: TextStyle(fontSize: 20.5)),
+                          title: Text(Provider.of<HomeModel>(context).appName,
+                              style: const TextStyle(fontSize: 20.5)),
                           actions: <Widget>[
                             IconButton(
                               icon: const Icon(Icons.search),
@@ -141,5 +120,8 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                             curve: Curves.ease);
                   });
                 },
-              ))));
+              )
+          )
+      )
+  );
 }
