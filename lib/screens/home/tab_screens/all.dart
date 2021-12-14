@@ -195,7 +195,7 @@ class SecondRoute extends StatelessWidget {
   final String imgtxt;
   final int index;
 
-  SecondRoute({required this.imgtxt, required this.index});
+  const SecondRoute({required this.imgtxt, required this.index, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

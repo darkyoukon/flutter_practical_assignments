@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../home_model.dart';
 
-final List<String> chosen_entries = <String>[
+final List<String> chosenEntries = <String>[
   'Saved Messages',
   'Мама',
   'Папа',
@@ -47,7 +47,7 @@ class _FamilyScreen extends State<FamilyScreen> {
   Widget build(BuildContext context) {
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
-      itemCount: chosen_entries.length,
+      itemCount: chosenEntries.length,
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
@@ -68,7 +68,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                               return CircleAvatar(
                                   backgroundColor:
                                   Color(Random().nextInt(0xffffffff)),
-                                  child: Text(chosen_entries[index]
+                                  child: Text(chosenEntries[index]
                                       .split(' ')
                                       .map((e) => e = e[0])
                                       .join()),
@@ -77,7 +77,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                               if (snapshot.hasError) {
                                 return CircleAvatar(
                                     backgroundColor: Colors.brown.shade800,
-                                    child: Text(chosen_entries[index]
+                                    child: Text(chosenEntries[index]
                                         .split(' ')
                                         .map((e) => e = e[0])
                                         .join()),
@@ -102,7 +102,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                                   children: <Widget>[
                                     Expanded(
                                         flex: 5,
-                                        child: Text(chosen_entries[index],
+                                        child: Text(chosenEntries[index],
                                             style: const TextStyle(
                                                 color: Color(0xffe9eef4),
                                                 fontSize: 16,
@@ -115,14 +115,14 @@ class _FamilyScreen extends State<FamilyScreen> {
                                             children: <Widget>[
                                               if (HomeModel.rndState[
                                               HomeModel.entries.indexOf(
-                                                  chosen_entries[index])] ==
+                                                  chosenEntries[index])] ==
                                                   0) ...[
                                                 Image.asset(
                                                     'assets/icons/widget_halfcheck.png',
                                                     width: 14),
                                               ] else if (HomeModel.rndState[
                                               HomeModel.entries.indexOf(
-                                                  chosen_entries[index])] ==
+                                                  chosenEntries[index])] ==
                                                   1) ...[
                                                 Stack(
                                                   clipBehavior: Clip.none,
@@ -140,7 +140,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                                                 )
                                               ] else if (HomeModel.rndState[
                                               HomeModel.entries.indexOf(
-                                                  chosen_entries[index])] ==
+                                                  chosenEntries[index])] ==
                                                   2) ...[
                                                 Image.asset(
                                                     'assets/icons/widget_clock.png',
@@ -162,7 +162,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                                             color: Color(0xff7d8b99),
                                             fontSize: 16)),
                                     if (HomeModel.rndState[HomeModel.entries
-                                        .indexOf(chosen_entries[index])] >
+                                        .indexOf(chosenEntries[index])] >
                                         2) ...[
                                       Stack(
                                         alignment: Alignment.center,
@@ -172,7 +172,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                                                   HomeModel.rndMsgs[HomeModel
                                                       .entries
                                                       .indexOf(
-                                                      chosen_entries[
+                                                      chosenEntries[
                                                       index])] >
                                                   9
                                                   ? 32
@@ -190,7 +190,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                                                       HomeModel.rndMsgs[HomeModel
                                                           .entries
                                                           .indexOf(
-                                                          chosen_entries[index])])
+                                                          chosenEntries[index])])
                                                       .toString(),
                                                   style: const TextStyle(fontWeight: FontWeight.bold))),
                                         ],
