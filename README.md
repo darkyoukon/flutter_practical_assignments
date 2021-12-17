@@ -1,6 +1,6 @@
-# second_pa_telegram
+# third_pa_telegram
 
-PA#2. Telegram front-end with lecture tasks (hero and swipe moving)
+PA#3. Stateful and stateless widgets, manipulation, lifting state up, Provider, Consumer and model with notifyListeners().
 
 ## Getting Started
 
