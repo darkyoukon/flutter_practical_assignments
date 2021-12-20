@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'dart:math';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
 
 import '../home_model.dart';
+import 'img_builder.dart';
 
 final List<String> chosenEntries = <String>[
   'Saved Messages',
@@ -26,20 +23,9 @@ class FamilyScreen extends StatefulWidget {
 }
 
 class _FamilyScreen extends State<FamilyScreen> {
-  late Future futImages;
-
-  Future<List<String>> initImages() async {
-    final manifestContent = await rootBundle.loadString('AssetManifest.json');
-    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
-
-    return manifestMap.keys
-        .where((String key) => key.contains('images/'))
-        .toList();
-  }
 
   @override
   void initState() {
-    futImages = initImages();
     super.initState();
   }
 
@@ -60,37 +46,7 @@ class _FamilyScreen extends State<FamilyScreen> {
                 const EdgeInsets.only(top: 1, left: 9, right: 9, bottom: 1),
                 child: Row(
                   children: <Widget>[
-                    FutureBuilder(
-                        future: futImages,
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return CircleAvatar(
-                                  backgroundColor:
-                                  Color(Random().nextInt(0xffffffff)),
-                                  child: Text(chosenEntries[index]
-                                      .split(' ')
-                                      .map((e) => e = e[0])
-                                      .join()),
-                                  radius: 29);
-                            default:
-                              if (snapshot.hasError) {
-                                return CircleAvatar(
-                                    backgroundColor: Colors.brown.shade800,
-                                    child: Text(chosenEntries[index]
-                                        .split(' ')
-                                        .map((e) => e = e[0])
-                                        .join()),
-                                    radius: 29);
-                              } else {
-                                List<String> imgSources =
-                                snapshot.data as List<String>;
-                                return CircleAvatar(
-                                    backgroundImage: AssetImage(imgSources[index]),
-                                    radius: 29);
-                              }
-                          }
-                        }),
+                    FutImages(chosenEntries, index),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 11, right: 6),
