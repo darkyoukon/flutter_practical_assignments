@@ -4,8 +4,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeModel extends ChangeNotifier {
+  void setDarkTheme() {
+    SharedPreferences.getInstance()
+        .then((prefs) {
+          prefs.setBool("theme", !(prefs.getBool("theme") ?? true));
+        });
+    notifyListeners();
+  }
+  Future<bool> getDarkTheme() {
+    return SharedPreferences.getInstance().then((prefs) {
+      return prefs.getBool("theme") ?? true;
+    });
+  }
 
   bool isFabVisible = true;
 

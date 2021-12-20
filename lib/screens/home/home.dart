@@ -34,11 +34,15 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
     )
   ];
 
+  late bool darkTheme;
+
   @override
   void initState() {
-    super.initState();
+    Provider.of<HomeModel>(context)
+        .getDarkTheme().then((value) => darkTheme = value);
     Provider.of<HomeModel>(context, listen: false).setTabController(
         TabController(length: _bottomNavBarItems.length, vsync: this));
+    super.initState();
   }
 
   @override
@@ -70,11 +74,11 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                               style: const TextStyle(fontSize: 20.5)),
                           actions: <Widget>[
                             IconButton(
-                              icon: const Icon(Icons.search),
+                              icon: darkTheme ?
+                              const Icon(Icons.brightness_medium) :
+                              const Icon(Icons.brightness_medium_outlined),
                               onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('This is a snackbar')));
+                                Provider.of<HomeModel>(context, listen: false).setDarkTheme();
                               },
                             )
                           ],
