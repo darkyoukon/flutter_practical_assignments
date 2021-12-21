@@ -23,7 +23,7 @@ class FamilyScreen extends StatefulWidget {
   State<FamilyScreen> createState() => _FamilyScreen();
 }
 
-class _FamilyScreen extends State<FamilyScreen> {
+class _FamilyScreen extends State<FamilyScreen> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
