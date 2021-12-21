@@ -15,6 +15,7 @@ import 'package:second_pa_telegram/screens/home/tab_screens/shared_prefs.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import 'home_model.dart';
+import 'named_route_sample.dart';
 
 class Home extends StatefulWidget {
 
@@ -88,13 +89,18 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                             title: Text(Provider.of<HomeModel>(context).appName,
                                 style: const TextStyle(fontSize: 20.5)),
                             actions: <Widget>[
-                              IconButton(
-                                icon: Provider.of<SharedPrefs>(context).getTheme ?
-                                const Icon(Icons.brightness_medium) :
-                                const Icon(Icons.brightness_medium_outlined),
-                                onPressed: () {
-                                  Provider.of<SharedPrefs>(context, listen: false).changeTheme();
+                              GestureDetector(
+                                onLongPress: () {
+                                  Navigator.pushNamed(context, NamedRouteSample.altRouteName, arguments: "Complicated Widg");
                                 },
+                                child: IconButton(
+                                  icon: Provider.of<SharedPrefs>(context).getTheme ?
+                                  const Icon(Icons.brightness_medium) :
+                                  const Icon(Icons.brightness_medium_outlined),
+                                  onPressed: () {
+                                    Provider.of<SharedPrefs>(context, listen: false).changeTheme();
+                                  },
+                                )
                               )
                             ],
                           )))
@@ -102,13 +108,18 @@ class _StateHome extends State<Home> with SingleTickerProviderStateMixin {
                 body: MyPageView(countIndex)),
             floatingActionButton:
             Provider.of<HomeModel>(context).isFabVisible
-                ? FloatingActionButton(
-                tooltip: 'Increment Counter',
-                backgroundColor: const Color(0xff5fa3de),
-                onPressed: () {
-                  setState(() => countIndex++);
-                },
-                child: const Icon(Icons.create_rounded))
+                ? GestureDetector(
+              onLongPress: () {
+                Navigator.pushNamed(context, NamedRouteSample.routeName, arguments: "Sample Widg");
+              },
+              child: FloatingActionButton(
+                  backgroundColor: const Color(0xff5fa3de),
+                  onPressed: () {
+                    setState(() => countIndex++);
+                  },
+                  child: const Icon(Icons.create_rounded)
+              ),
+            )
                 : null,
             bottomNavigationBar: ColoredBox(
                 color: prefs.getTheme ? const Color(0xff212d3b) : const Color(0xff4f7d9f),

@@ -10,6 +10,19 @@ class AllScreen extends StatelessWidget {
 
   const AllScreen(this.countIndex, {Key? key}) : super(key: key);
 
+  void _navigateAndDisplaySelection(BuildContext context, String imgSource, int index) async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SecondRoute(
+                imgtxt: imgSource,
+                index: index)));
+
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text('$result')));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<HomeModel, SharedPrefs>(
@@ -56,12 +69,7 @@ class AllScreen extends StatelessWidget {
                                       snapshot.data as List<String>;
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => SecondRoute(
-                                                  imgtxt: imgSources[index],
-                                                  index: index)));
+                                      _navigateAndDisplaySelection(context, imgSources[index], index);
                                     },
                                     child: Hero(
                                         tag: 'fullscreen$index',
@@ -226,7 +234,7 @@ class SecondRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Navigator.pop(context);
+          Navigator.pop(context, "You have successfully closed image preview $imgtxt");
         },
         child: Material(
           color: Colors.transparent,
