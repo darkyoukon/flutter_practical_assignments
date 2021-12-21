@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:second_pa_telegram/screens/home/tab_screens/shared_prefs.dart';
 
 import '../home_model.dart';
 import 'img_builder.dart';
@@ -59,8 +60,10 @@ class _FamilyScreen extends State<FamilyScreen> {
                                     Expanded(
                                         flex: 5,
                                         child: Text(chosenEntries[index],
-                                            style: const TextStyle(
-                                                color: Color(0xffe9eef4),
+                                            style: TextStyle(
+                                                color: Provider.of<SharedPrefs>(context).getTheme
+                                                    ? const Color(0xffe9eef4)
+                                                    : const Color(0xff1e1e1e),
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold))),
                                     Expanded(
@@ -73,9 +76,13 @@ class _FamilyScreen extends State<FamilyScreen> {
                                               HomeModel.entries.indexOf(
                                                   chosenEntries[index])] ==
                                                   0) ...[
-                                                Image.asset(
+                                                Provider.of<SharedPrefs>(context).getTheme
+                                                    ? Image.asset(
                                                     'assets/icons/widget_halfcheck.png',
-                                                    width: 14),
+                                                    width: 14)
+                                                    : Image.asset(
+                                                    'assets/icons/widget_halfcheck_green.png',
+                                                    width: 14)
                                               ] else if (HomeModel.rndState[
                                               HomeModel.entries.indexOf(
                                                   chosenEntries[index])] ==
@@ -85,12 +92,20 @@ class _FamilyScreen extends State<FamilyScreen> {
                                                   children: <Widget>[
                                                     Positioned(
                                                       left: -5,
-                                                      child: Image.asset(
+                                                      child: Provider.of<SharedPrefs>(context).getTheme
+                                                          ? Image.asset(
                                                           'assets/icons/widget_halfcheck.png',
+                                                          width: 14)
+                                                          : Image.asset(
+                                                          'assets/icons/widget_halfcheck_green.png',
                                                           width: 14),
                                                     ),
-                                                    Image.asset(
+                                                    Provider.of<SharedPrefs>(context).getTheme
+                                                        ? Image.asset(
                                                         'assets/icons/widget_check.png',
+                                                        width: 14)
+                                                        : Image.asset(
+                                                        'assets/icons/widget_check_green.png',
                                                         width: 14)
                                                   ],
                                                 )
@@ -168,7 +183,9 @@ class _FamilyScreen extends State<FamilyScreen> {
         );
       },
       separatorBuilder: (BuildContext context, int index) =>
-          const Divider(thickness: 0.6, indent: 74, color: Color(0xff11171e)),
+          Divider(thickness: 0.6, indent: 74, color: Provider.of<SharedPrefs>(context).getTheme
+              ? const Color(0xff11171e)
+              : const Color(0xffe8e8e8)),
     );
   }
 }

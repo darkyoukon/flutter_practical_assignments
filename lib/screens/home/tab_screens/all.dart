@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
+import 'package:second_pa_telegram/screens/home/tab_screens/shared_prefs.dart';
 
 import '../home_model.dart';
 
@@ -11,20 +12,21 @@ class AllScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeModel>(builder: (context, home, child) {
+    return Consumer2<HomeModel, SharedPrefs>(
+        builder: (context, home, prefs, _) {
       return ListView.separated(
         physics: const BouncingScrollPhysics(),
         itemCount: HomeModel.entries.length,
         padding: const EdgeInsets.only(top: 8, bottom: 8),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
-              onTap: (){
+              onTap: () {
                 home.changeAppName(HomeModel.entries[index]);
               },
               child: Container(
                   height: 56,
-                  padding:
-                  const EdgeInsets.only(top: 1, left: 9, right: 9, bottom: 1),
+                  padding: const EdgeInsets.only(
+                      top: 1, left: 9, right: 9, bottom: 1),
                   child: Row(
                     children: <Widget>[
                       FutureBuilder(
@@ -34,7 +36,7 @@ class AllScreen extends StatelessWidget {
                               case ConnectionState.waiting:
                                 return CircleAvatar(
                                     backgroundColor:
-                                    Color(Random().nextInt(0xffffffff)),
+                                        Color(Random().nextInt(0xffffffff)),
                                     child: Text(HomeModel.entries[index]
                                         .split(' ')
                                         .map((e) => e = e[0])
@@ -51,7 +53,7 @@ class AllScreen extends StatelessWidget {
                                       radius: 29);
                                 } else {
                                   List<String> imgSources =
-                                  snapshot.data as List<String>;
+                                      snapshot.data as List<String>;
                                   return GestureDetector(
                                     onTap: () {
                                       Navigator.push(
@@ -65,7 +67,7 @@ class AllScreen extends StatelessWidget {
                                         tag: 'fullscreen$index',
                                         child: CircleAvatar(
                                             backgroundImage:
-                                            AssetImage(imgSources[index]),
+                                                AssetImage(imgSources[index]),
                                             radius: 29)),
                                   );
                                 }
@@ -79,45 +81,61 @@ class AllScreen extends StatelessWidget {
                               children: <Widget>[
                                 Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Expanded(
                                           flex: 5,
                                           child: Text(HomeModel.entries[index],
-                                              style: const TextStyle(
-                                                  color: Color(0xffe9eef4),
+                                              style: TextStyle(
+                                                  color: prefs.getTheme
+                                                      ? const Color(0xffe9eef4)
+                                                      : const Color(0xff1e1e1e),
                                                   fontSize: 16,
-                                                  fontWeight: FontWeight.bold))),
+                                                  fontWeight:
+                                                      FontWeight.bold))),
                                       Expanded(
                                           flex: 1,
                                           child: Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: <Widget>[
                                                 if (HomeModel.rndState[index] ==
                                                     0) ...[
-                                                  Image.asset(
-                                                      'assets/icons/widget_halfcheck.png',
-                                                      width: 14),
+                                                  prefs.getTheme
+                                                      ? Image.asset(
+                                                          'assets/icons/widget_halfcheck.png',
+                                                          width: 14)
+                                                      : Image.asset(
+                                                          'assets/icons/widget_halfcheck_green.png',
+                                                          width: 14)
                                                 ] else if (HomeModel
-                                                    .rndState[index] ==
+                                                        .rndState[index] ==
                                                     1) ...[
                                                   Stack(
                                                     clipBehavior: Clip.none,
                                                     children: <Widget>[
                                                       Positioned(
                                                         left: -5,
-                                                        child: Image.asset(
+                                                        child: prefs.getTheme
+                                                            ? Image.asset(
                                                             'assets/icons/widget_halfcheck.png',
+                                                            width: 14)
+                                                            : Image.asset(
+                                                            'assets/icons/widget_halfcheck_green.png',
                                                             width: 14),
                                                       ),
-                                                      Image.asset(
+                                                      prefs.getTheme
+                                                          ? Image.asset(
                                                           'assets/icons/widget_check.png',
+                                                          width: 14)
+                                                          : Image.asset(
+                                                          'assets/icons/widget_check_green.png',
                                                           width: 14)
                                                     ],
                                                   )
                                                 ] else if (HomeModel
-                                                    .rndState[index] ==
+                                                        .rndState[index] ==
                                                     2) ...[
                                                   Image.asset(
                                                       'assets/icons/widget_clock.png',
@@ -127,13 +145,14 @@ class AllScreen extends StatelessWidget {
                                                 ],
                                                 const Text('22:06',
                                                     style: TextStyle(
-                                                        color: Color(0xff717d88),
+                                                        color:
+                                                            Color(0xff717d88),
                                                         fontSize: 14))
                                               ]))
                                     ]),
                                 Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       const Text('Привет, это я',
                                           style: TextStyle(
@@ -145,9 +164,9 @@ class AllScreen extends StatelessWidget {
                                           children: <Widget>[
                                             Container(
                                                 width: (countIndex +
-                                                    HomeModel
-                                                        .rndMsgs[index]) >
-                                                    9
+                                                            HomeModel.rndMsgs[
+                                                                index]) >
+                                                        9
                                                     ? 32
                                                     : 23,
                                                 height: 23,
@@ -155,21 +174,23 @@ class AllScreen extends StatelessWidget {
                                                 decoration: const BoxDecoration(
                                                   color: Color(0xff64b5ef),
                                                   shape: BoxShape.rectangle,
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(80)),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(80)),
                                                 ),
                                                 child: Text(
                                                     (countIndex +
-                                                        HomeModel
-                                                            .rndMsgs[index])
+                                                            HomeModel
+                                                                .rndMsgs[index])
                                                         .toString(),
                                                     style: const TextStyle(
                                                         fontWeight:
-                                                        FontWeight.bold))),
+                                                            FontWeight.bold))),
                                           ],
                                         )
                                       ] else if (index < 5) ...[
-                                        Image.asset('assets/icons/widget_pin.png',
+                                        Image.asset(
+                                            'assets/icons/widget_pin.png',
                                             width: 23),
                                       ]
                                     ]),
@@ -180,12 +201,15 @@ class AllScreen extends StatelessWidget {
                     ],
                   )
 
-                //Center(child: Text(entries[index])),
-              )
-          );
+                  //Center(child: Text(entries[index])),
+                  ));
         },
-        separatorBuilder: (BuildContext context, int index) =>
-            const Divider(thickness: 0.6, indent: 74, color: Color(0xff11171e)),
+        separatorBuilder: (BuildContext context, int index) => Divider(
+            thickness: 0.6,
+            indent: 74,
+            color: prefs.getTheme
+                ? const Color(0xff11171e)
+                : const Color(0xffe8e8e8)),
       );
     });
   }
@@ -195,7 +219,8 @@ class SecondRoute extends StatelessWidget {
   final String imgtxt;
   final int index;
 
-  const SecondRoute({required this.imgtxt, required this.index, Key? key}) : super(key: key);
+  const SecondRoute({required this.imgtxt, required this.index, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

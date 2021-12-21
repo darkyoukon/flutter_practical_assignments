@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:second_pa_telegram/screens/home/tab_screens/all.dart';
 import 'package:second_pa_telegram/screens/home/tab_screens/family.dart';
 
-import 'home_model.dart';
+import '../home_model.dart';
 
 class MyPageView extends StatelessWidget {
   final int countIndex;
