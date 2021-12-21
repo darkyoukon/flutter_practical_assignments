@@ -50,7 +50,7 @@ class _StateHome extends State<Home> with TickerProviderStateMixin {
     Provider.of<HomeModel>(context, listen: false).setTabController(
         TabController(length: _bottomNavBarItems.length, vsync: this));
     controller = AnimationController(vsync: this, duration: const Duration(seconds: 3));
-    rotationAnimation = Tween(begin: 0.0, end: 6.28).animate(controller);
+    rotationAnimation = Tween(begin: 0.0, end: 6.28).animate(CurvedAnimation(curve: Curves.easeInOutBack, parent: controller));
     controller.repeat();
 
     Timer.periodic(
@@ -78,7 +78,7 @@ class _StateHome extends State<Home> with TickerProviderStateMixin {
           length: 3,
           child: Consumer<SharedPrefs>(builder: (context, prefs, _) {
             return Scaffold(
-                backgroundColor: prefs.getTheme ? const Color(0xff1d2733) : const Color(0x00ffffff),
+                backgroundColor: prefs.getTheme ? const Color(0xff1d2733) : const Color(0xffffffff),
                 body: NestedScrollView(
                     controller: Provider.of<HomeModel>(context)
                         .getScrollController(),
